@@ -1,141 +1,163 @@
-1. Two Sum 
+1.	Write a program to Print Fibonacci Series using recursion.
 
-def twoSum(nums, target):
-    num_dict = {}
-    for i, num in enumerate(nums):
-        if num in num_dict:
-            return [num_dict[num], i]
-        num_dict[target - num] = i
-
-2. Add Two Numbers
-
-class ListNode:
-    def _init_(self, val=0, next=None):
-        self.val = val
-        self.next = next
-def addTwoNumbers(l1, l2):
-    dummy = ListNode()
-    current = dummy
-    carry = 0
-    while l1 or l2 or carry:
-        x = l1.val if l1 else 0
-        y = l2.val if l2 else 0
-        sum_val = x + y + carry
-        carry = sum_val // 10
-        current.next = ListNode(sum_val % 10)
-        current = current.next
-        l1 = l1.next if l1 else None
-        l2 = l2.next if l2 else None
-    return dummy.next
-
-3 .Longest Substring without Repeating Characters
-
-def lengthOfLongestSubstring(s):
-    char_set = set()
-    l = 0
-    res = 0
-    for r in range(len(s)):
-        while s[r] in char_set:
-            char_set.remove(s[l])
-            l += 1
-        char_set.add(s[r])
-        res = max(res, r - l + 1)
-    return res
-
-4. Median of Two Sorted Arrays
-def findMedianSortedArrays(nums1, nums2):
-    merged = sorted(nums1 + nums2)
-    n = len(merged)
-    return merged[n // 2] if n % 2 else (merged[n // 2 - 1] + merged[n // 2]) / 2
-
-5.  Longest Palindromic Substring
-def longestPalindrome(s):
-    def expand_around_center(s, left, right):
-        while left >= 0 and right < len(s) and s[left] == s[right]:
-            left -= 1
-            right += 1
-        return s[left + 1:right]
-    longest = ""
-    for i in range(len(s)):
-        palindrome1 = expand_around_center(s, i, i)
-        palindrome2 = expand_around_center(s, i, i + 1)
-        if len(palindrome1) > len(longest):
-            longest = palindrome1
-        if len(palindrome2) > len(longest):
-            longest = palindrome2
-    return longest
-
-6. Zigzag Conversion
-def convert(s, numRows):
-    if numRows == 1 or numRows >= len(s):
-        return s
-    result = [''] * numRows
-    index, step = 0, 1
-    for char in s:
-        result[index] += char
-        if index == 0:
-            step = 1
-        elif index == numRows - 1:
-            step = -1
-        index += step
-    return ''.join(result)
-
-7.  Reverse Integer
-def reverse(x):
-    negative = False
-    if x < 0:
-        x, negative = -x, True
-    reversed_num = 0
-    while x:
-        reversed_num = reversed_num * 10 + x % 10
-        x //= 10def isPalindrome(x):
-    if x < 0:
-        return False
-    reversed_num = 0
-    original_num = x
-    while x:
-        x //= 10
-        reversed_num = reversed_num * 10 + x % 10
-    return original_num == reversed_num
-    if negative:
-        reversed_num = -reversed_num
-    return reversed_num if -2*31 <= reversed_num <= 2*31 - 1 else 0
-
-8. String to Integer (atoi)
-def myAtoi(s):
-    s = s.lstrip()
-    if not s:
+def fibonacci(n):
+    if n <= 0:
+        return "Input should be a positive integer."
+    elif n == 1:
         return 0
-    sign = 1
-    if s[0] in ('-', '+'):
-        sign = -1 if s[0] == '-' else 1
-        s = s[1:]
-    result = 0
-    for char in s:
-        if not char.isdigit():
-            break
-        result = result * 10 + int(char)
-    result *= sign
-    return max(-2*31, min(result, 2*31 - 1))
-
-9.   Palindrome Number
-def isPalindrome(x):
-    if x < 0:
-        return False
-    reversed_num = 0
-    original_num = x
-    while x:
-        x //= 10
-        reversed_num = reversed_num * 10 + x % 10
-    return original_num == reversed_num
-
-10. Regular Expression Matching
-def isMatch(s, p):
-    if not p:
-        return not s
-    first_match = bool(s) and p[0] in {s[0], '.'}
-    if len(p) >= 2 and p[1] == '*':
-        return (isMatch(s, p[2:]) or
-                first_match and isMatch(s[1:], p))
+    elif n == 2:
+        return 1
     else:
-        return first_match and isMatch(s[1:], p[1:])
+        return fibonacci(n-1) + fibonacci(n-2)
+
+n = int(input("Enter the number of terms: "))
+for i in range(1, n+1):
+    print(fibonacci(i))
+
+
+2.	Write a program to check the given no is Armstrong or not using recursive function.
+
+def is_armstrong(num, original_num):
+    if num == 0:
+        return 0
+    return (num % 10) ** len(str(original_num)) + is_armstrong(num // 10, original_num)
+
+num = int(input("Enter a number: "))
+original_num = num
+result = is_armstrong(num, original_num)
+
+if result == num:
+    print(f"{num} is an Armstrong number.")
+else:
+    print(f"{num} is not an Armstrong number.")
+
+
+3.	Write a program to find the GCD of two numbers using recursive factorization
+
+def gcd(a, b):
+    if b == 0:
+        return a
+    else:
+        return gcd(b, a % b)
+
+num1 = int(input("Enter the first number: "))
+num2 = int(input("Enter the second number: "))
+
+print(f"The GCD of {num1} and {num2} is {gcd(num1, num2)}")
+
+
+4.         Write a program to get the largest element of an array.
+
+def find_largest(arr):
+    return max(arr)
+
+# Example usage
+arr = [12, 45, 7, 23, 56, 89, 34]
+print(f"The largest element in the array is {find_largest(arr)}")
+
+
+5.          Write a program to find the Factorial of a number using recursion.
+
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+num = int(input("Enter a number: "))
+print(f"The factorial of {num} is {factorial(num)}")
+
+
+6.         Write a program for to copy one string to another  using recursion
+
+def copy_string(str1, str2, index):
+    if index >= len(str1):
+        return str2
+    else:
+        str2 += str1[index]
+        return copy_string(str1, str2, index + 1)
+
+str1 = input("Enter the first string: ")
+str2 = ""
+
+print(f"The copied string is: {copy_string(str1, str2, 0)}")
+
+
+7. Write a program   to print the reverse of a string using recursion
+
+def reverse_string(str):
+    if len(str) == 0:
+        return str
+    else:
+        return reverse_string(str[1:]) + str[0]
+
+str = input("Enter a string: ")
+print(f"The reverse of the string is: {reverse_string(str)}")
+
+
+8. Write a program   to generate all the prime numbers using recursion
+
+def is_prime(n):
+    if n <= 1:
+        return False
+    elif n <= 3:
+        return True
+    elif n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def generate_primes(n):
+    if n <= 1:
+        return []
+    elif n <= 3:
+        return [2, 3]
+    else:
+        primes = generate_primes(n - 1)
+        if is_prime(n):
+            primes.append(n)
+        return primes
+
+n = int(input("Enter the number of prime numbers to generate: "))
+print(f"The first {n} prime numbers are: {generate_primes(n)}")
+
+
+9. Write a program to check a number is a prime number or not using recursion.
+
+def is_prime(n, i=2):
+    if n <= 2:
+        return n == 2
+    if n % i == 0:
+        return False
+    if i * i > n:
+        return True
+    return is_prime(n, i + 1)
+
+num = int(input("Enter a number: "))
+
+if is_prime(num):
+    print(f"{num} is a prime number.")
+else:
+    print(f"{num} is not a prime number.")
+
+
+10.Write a program for to check whether a given String is Palindrome or  not using recursion
+
+def is_palindrome(s):
+    if len(s) <= 1:
+        return True
+    else:
+        if s[0] == s[-1]:
+            return is_palindrome(s[1:-1])
+        else:
+            return False
+
+s = input("Enter a string: ")
+if is_palindrome(s):
+    print(f"{s} is a palindrome.")
+else:
+    print(f"{s} is not a palindrome.")
