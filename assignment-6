@@ -171,3 +171,81 @@ def pivotInteger(n):
             return i
     return -1
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+8.APPEND CHARACTERS TO STRING TO MAKE SUBSEQUENCE
+ALGORITHM:
+Concatenate s and t into a single string s.
+Initialize a variable res to 0, which will store the minimum number of characters to append.
+Initialize an empty stack.
+Iterate through each character c in s.
+If c is an opening parenthesis (, push it onto the stack.
+If c is a closing parenthesis ), check if the stack is not empty. If it is not empty, pop the opening parenthesis from the stack. If it is empty, increment res by 1.
+Return res as the minimum number of characters to append.
+CODE:
+def minAddToMakeValid(s, t):
+    s += t
+    res = 0
+    stack = []
+    for c in s:
+        if c == '(':
+            stack.append(c)
+        elif c == ')':
+            if stack:
+                stack.pop()
+            else:
+                res += 1
+    return res
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+9.REMOVE NODES FROM LINKEDLIST
+ALGORITHM:
+If the linked list is empty or has only one node, return the head as is.
+Create a dummy node and set its next pointer to the head of the linked list.
+Initialize a variable max_val to the value of the dummy node, which is 0.
+Initialize two pointers, prev and curr, to the dummy node and the head of the linked list, respectively.
+Traverse the linked list using the curr pointer.
+For each node:
+If the current node's value is greater than or equal to max_val, update max_val to the current node's value and move the prev pointer to the current node.
+If the current node's value is less than max_val, remove the current node by updating the next pointer of the prev node to skip the current node.
+Move the curr pointer to the next node.
+After the loop, return the next pointer of the dummy node, which is the head of the modified linked list.
+CODE:
+class ListNode:
+    def init(self, val=0, next=None):
+        self.val = val
+        self.next = next
+def removeNodes(head):
+    if not head or not head.next:
+        return head
+    dummy = ListNode(0, head)
+    max_val = dummy.val
+    prev, curr = dummy, head
+    while curr:
+        if curr.val >= max_val:
+            max_val = curr.val
+            prev = curr
+        else:
+            prev.next = curr.next
+        curr = curr.next
+    return dummy.next
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+10.COUNT SUBARRAYS WITH MEDIAN K
+ALGORITHM:
+Initialize a variable res to 0, which will store the count of subarrays with median k.
+Iterate through each element i in the array nums.
+Initialize two pointers left and right to i.
+Move left to the left and right to the right until nums[left] is greater than k or nums[right] is less than k.
+If nums[left] and nums[right] are both equal to k, increment res by right - left + 1, which is the number of subarrays with median k.
+Move left to the left and right to the right until nums[left] is greater than k or nums[right] is less than k.
+Return res as the count of subarrays with median k.
+CODE:
+def countSubarrays(nums, k):
+    n = len(nums)
+    res = 0
+    for i in range(n):
+        left, right = i, i
+        while left >= 0 and right < n and nums[left] <= k <= nums[right]:
+            if nums[left] == k and nums[right] == k:
+                res += right - left + 1
+            left -= 1
+            right += 1
+    return res
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
